@@ -19,7 +19,8 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
-    ExcelProcessor excelProcessor = new ExcelProcessor();;
+    ExcelProcessor excelProcessor = new ExcelProcessor();
+    Utils utils = new Utils();
 
     byte count = 1;
     @Override
@@ -49,31 +50,28 @@ public class App extends Application {
 
         Label labelName = new Label("no text");
         Label labelAge = new Label("no text");
-        Label labelBeforeName = new Label("First Value");
-        Label labelBeforeAge = new Label("Snd Value");
-//        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
-//            public void handle(ActionEvent e)
-//            {
-//                labelName.setText(nameField.getText());
-//                labelAge.setText(ageField.getText());
-//            }
-//        };
+        Label labelBeforeName = new Label("Name value");
+        Label labelBeforeAge = new Label("Age value");
+
         nameField.setOnAction(actionEvent -> {
-            labelName.setText(nameField.getText());
         });
 
         ageField.setOnAction(actionEvent -> {
-            labelAge.setText(ageField.getText());
         });
 
         submitBtn.setOnAction(actionEvent -> {
-            excelProcessor.fillCell(Integer.parseInt(ageField.getText()));
+            excelProcessor.fillCell(utils.isValidInput(ageField.getText()));
+            labelAge.setText(utils.getExceptionName());
             excelProcessor.fillCell(nameField.getText());
-            excelProcessor.writeFile();
-            count++;
-            excelProcessor.createRow(count);
-
+            labelName.setText("OK");
+            if (utils.getExceptionName().equals("OK")){
+                excelProcessor.writeFile();
+                count++;
+                excelProcessor.createRow(count);
+            }
+            utils.setExceptionName("OK");
         });
+
         closeBtn.setOnAction(actionEvent -> excelProcessor.close());
 
         labelName.setLayoutX(220);

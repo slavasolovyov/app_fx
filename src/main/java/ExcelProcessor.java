@@ -18,6 +18,7 @@ public class ExcelProcessor {
         createSheet();
     }
 
+
     protected ExcelProcessor createSheet(){
         workbook = new XSSFWorkbook();
         style = workbook.createCellStyle();
@@ -54,16 +55,16 @@ public class ExcelProcessor {
     }
 
     public ExcelProcessor fillCell(int number){
-        cell = row.createCell(1);
-        cell.setCellValue(number);
-        cell.setCellStyle(style);
+       cell = row.createCell(1);
+       cell.setCellValue(number);
+       cell.setCellStyle(style);
        return this;
     }
 
     public ExcelProcessor fillCell(String text){
-        cell = row.createCell(0);
-        cell.setCellValue(text);
-        cell.setCellStyle(style);
+       cell = row.createCell(0);
+       cell.setCellValue(text);
+       cell.setCellStyle(style);
        return this;
     }
 
